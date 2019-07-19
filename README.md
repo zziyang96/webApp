@@ -39,6 +39,8 @@ cnpm i mysql --save
 # run the development environment, run the program
 npm run dev
 
+# project on port:8080
+http://localhost:8080
 
 
 3. 
@@ -59,6 +61,6 @@ cnpm i express --save
 #install mysql
 cnpm i mysql --save
 
-# run server, listen port
+# run server
 nodemon app
 
