@@ -16,7 +16,7 @@ git clone https://github.com/zziyang96/webApp.git
 # open a terminal
 
 # enter the main project directory
-cd code/vue-ms 
+cd Projects/storage 
 
 # install dependency
 npm install
@@ -39,15 +39,15 @@ cnpm i mysql --save
 # run the development environment, run the program
 npm run dev
 
-# project on port:8080
-http://localhost:8080
+# project on port:8081
+http://localhost:8081
 
 
 3. 
 # open the second terminal
 
 # enter the project-server directory
-cd code/server 
+cd Projects/server 
 
 # install dependency
 npm install
