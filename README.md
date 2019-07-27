@@ -16,7 +16,7 @@ git clone https://github.com/zziyang96/webApp.git
 # open a terminal
 
 # enter the main project directory
-cd Projects/storage 
+cd vue-ms 
 
 # install dependency
 npm install
@@ -47,7 +47,7 @@ http://localhost:8081
 # open the second terminal
 
 # enter the project-server directory
-cd Projects/server 
+cd server
 
 # install dependency
 npm install

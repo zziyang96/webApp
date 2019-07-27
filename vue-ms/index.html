@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vue-ms</title>
+    <!--reset.css-->
+    <link rel="stylesheet" href="./static/css/reset.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
+
+
+
+
+
+
+<!-- 
+  create table users(
+    id int primary key auto_increment,
+    username varchar(50),
+    password varchar(32),
+    realname varchar(50),
+    sex varchar(10),
+    telphone varchar(50),
+    email varchar(50),
+    idType varchar(50),
+    department varchar(50),
+    branch varchar(50)
+  );
+  
+  create table categories(
+    id int primary key auto_increment,
+    category varchar(50) ,
+    description varchar(255),
+    categoryimg mediumblob
+  )
+  
+  create table manufacturers(
+    id int primary key auto_increment,
+    manufacturer varchar(50),
+    productname varchar(50),
+    productmodel varchar(50)
+  )
+
+  create table materials(
+    id int primary key auto_increment,
+    manufacturerId int foreign key references manufacturers(id)
+    description varchar(255),
+    categoryId int foreign key references categories (id),
+    productimg mediumblob,
+    quantity int,
+    status enum,
+    recorderId varchar(50) foreign key references users (id),
+    timerecord datatime
+    )
+
+
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('admin','123456','超级管理员','男', '13888888881','qz_admin@gmail.com','111','研发','深圳');
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('admin2','123456','测试部管理','男','13888888882','qz_test_admin@gmail.com','112','测试','顺德');
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('admin3','123456','技术部管理','男','13888888883','qz_it_admin@gmail.com','113','技术','杭州');
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('admin4','123456','人资部管理','女','13888888884','qz_hr_admin@gmail.com','114','人资','广州');
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('jacky1010','123456','杰克李','男','13123464354','qz_jacky10@gmail.com','44012','测试','深圳');
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('alice09','123456','爱丽丝','女','13346765443','qz_alice@gmail.com','55219','人资','顺德');
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('victor','123456','维克多','男','13377777777','qz_victor@gmail.com','55888','研发','深圳');
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('victoria','123456','维多利亚','女','13364555443','qz_victoria09@gmail.com','55432','人资','杭州');
+  
+
+ -->
