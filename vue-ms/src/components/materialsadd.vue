@@ -1,7 +1,6 @@
 <template>
   <div class="materialsadd">
-    
-    
+
     <!-- <el-main> -->
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm" >
         <el-form-item label="物资名称" prop="productname" style="width:400px;">
@@ -13,13 +12,13 @@
         <el-form-item label="物资详情" prop="description" style="width:500px;">
           <el-input v-model="ruleForm.description" size="mini" placeholder="请输入物资详情"></el-input>
         </el-form-item>
-         <el-form-item label="物资种类" prop="category">
-            <el-select v-model="ruleForm.category" size="mini" placeholder="请选择物资种类">
-            <el-option label="无人机" value="无人机"></el-option>
-            <el-option label="电脑" value="电脑"></el-option>
-            <el-option label="摄像头" value="摄像头"></el-option>
-            <el-option label="无人机电池" value="无人机电池"></el-option>
-            </el-select>
+        <el-form-item label="物资种类" prop="category">
+          <el-select v-model="ruleForm.category" size="mini" placeholder="请选择物资种类">
+          <el-option label="无人机" value="无人机"></el-option>
+          <el-option label="电脑" value="电脑"></el-option>
+          <el-option label="摄像头" value="摄像头"></el-option>
+          <el-option label="无人机电池" value="无人机电池"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="厂商/供应商" prop="manufacturer" style="width:400px;">
           <el-input v-model="ruleForm.manufacturer" size="mini" placeholder="请输入厂商/供应商名称"></el-input>
@@ -30,8 +29,8 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item label="录入数量" required prop="quantity">
-            <el-input-number v-model="ruleForm.quantity" @change="handleChange" :min="1" :max="100" size="small" label="描述文字"></el-input-number>
+        <el-form-item label="录入数量" required prop="recordnum">
+            <el-input-number v-model="ruleForm.recordnum" @change="handleChange" :min="1" :max="100" size="small" label="描述文字"></el-input-number>
         </el-form-item>
         <el-form-item label="录入人姓名" prop="recorder" style="width:300px;">
           <el-input v-model="ruleForm.recorder" size="mini" placeholder="请输入录入人姓名"></el-input>
@@ -42,6 +41,13 @@
         <el-form-item label="录入时间" required clearable prop="timerecord">
           <el-date-picker v-model="ruleForm.timerecord" type="datetime" placeholder="选择录入日期时间" size="mini" align="right" :picker-options="pickerOptions"
           ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="物资状态" prop="staus">
+            <el-select v-model="ruleForm.category" size="mini" placeholder="请更新物资状态">
+            <el-option label="采购中" value="采购中"></el-option>
+            <el-option label="库存满" value="库存满"></el-option>
+            <!-- <el-option label="摄像头" value="摄像头"></el-option> -->
+            </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -68,7 +74,7 @@ export default {
         imageUrl: '',
         productimg:'',
         timerecord: "",
-        quantity:1,
+        recordnum:1,
         manufacturer:''
       },
       // 表单规则

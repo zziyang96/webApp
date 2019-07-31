@@ -62,7 +62,8 @@
         
         <el-carousel :interval="4000" type="card" height="300px" style="margin-bottom:-25px;">
           <el-carousel-item v-for="item in 6" :key="item">
-            <h3 class="medium">{{  }}</h3>
+            <!-- <h3 class="medium">{{ category }}</h3>
+            <h3 class="medium">{{ description }}</h3> -->
           </el-carousel-item>
         </el-carousel>
       </el-main>  

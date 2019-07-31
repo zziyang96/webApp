@@ -16,7 +16,7 @@ const useradd = () => import('@/components/useradd')
 const materials = () => import('@/components/materials')
 const materialslist = () => import('@/components/materialslist')
 const materialsadd = () => import('@/components/materialsadd')
-// const systemmain = () => import('@/components/systemmain')
+const systemmain = () => import('@/components/systemmain')
 
 
 
@@ -74,18 +74,24 @@ const router = new Router({
         {
           path: '/materialslist',
           name: 'materialslist',
-          component: materialslist
+          component: materialslist,
+          children:[
+            {
+              path: 'materialsadd',
+              name: 'materialsadd',
+              component: materialsadd
+            },]
         },
         {
           path: '/materialsadd',
           name: 'materialsadd',
           component: materialsadd
         },
-        // {
-        //   path: '/systemmain',
-        //   name: 'systemmain',
-        //   component: systemmain
-        // }
+        {
+          path: '/systemmain',
+          name: 'systemmain',
+          component: systemmain
+        }
       ]
     },
     {

@@ -52,8 +52,8 @@
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 5px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>个人信息</el-dropdown-item>
-              <el-dropdown-item>退出系统</el-dropdown-item>
+              <el-dropdown-item command="home">个人信息</el-dropdown-item>
+              <el-dropdown-item command="signout">退出系统</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <span class="hello">Hello,&#8197;</span>
@@ -85,7 +85,11 @@ export default {
     };
   },
   mounted() {},
-  methods: {},
+  methods: {
+  },
+
+
+
   computed:{
     ...mapState({
       username: state => state.userinfo.username

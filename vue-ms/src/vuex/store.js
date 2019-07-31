@@ -46,6 +46,13 @@ const actions = {
     }
 }
 
+//define getter, Globally Shared data
+const getters = {
+    Admin: state => state.userList.filter(v => v.idType.length <= 3)
+}
+
+
+
 console.log()
 
 
@@ -53,5 +60,6 @@ console.log()
 export default new Vuex.Store({
     state,
     mutations,
-    actions
+    actions,
+    getters
 })

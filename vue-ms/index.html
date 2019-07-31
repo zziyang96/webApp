@@ -37,14 +37,14 @@
     category varchar(50) ,
     description varchar(255),
     categoryimg mediumblob
-  )
+  );
   
   create table manufacturers(
     id int primary key auto_increment,
     manufacturer varchar(50),
     productname varchar(50),
     productmodel varchar(50)
-  )
+  );
 
   create table materials(
     id int primary key auto_increment,
@@ -52,11 +52,15 @@
     description varchar(255),
     categoryId int foreign key references categories (id),
     productimg mediumblob,
-    quantity int,
+    quantity int default 1,
     status enum,
     recorderId varchar(50) foreign key references users (id),
     timerecord datatime
-    )
+  );
+
+  create table record(
+    
+  )
 
 
   insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('admin','123456','超级管理员','男', '13888888881','qz_admin@gmail.com','111','研发','深圳');
