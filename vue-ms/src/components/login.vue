@@ -1,35 +1,47 @@
 <template>
-    <!--登录表单-->
-
-  <div class="login">
-    <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px" class="demo-loginForm">
-      <h1 class="title">
-        Welcome back
-      </h1>
-      <el-form-item  label="Username" prop="username">
-        <el-input type="text" v-model="loginForm.username" placeholder="Please enter your username" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="Password" prop="password">
-        <el-input type="password" v-model="loginForm.password" placeholder="Please enter your password" autocomplete="off"></el-input>
-      </el-form-item>
-    
-      <el-form-item class="btn">
-        <el-button  type="primary" @click="submitForm('loginForm')">Login In</el-button>
-        <el-button  @click="resetForm('loginForm')">Reset</el-button>
+  <div id="login">
+      <!--登录表单-->
+    <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-position="center" label-width="0px" class="demo-loginForm login-container">
+      <h3 class="title">物料管理系统登录</h3>
+      <el-form-item   prop="email">
+          <el-input type="text" v-model="loginForm.email" placeholder="请输入你的邮箱" autocomplete="off" prefix-icon="el-icon-user"></el-input>
+        </el-form-item>
+        <el-form-item  prop="password">
+          <el-input type="password" v-model="loginForm.password" placeholder="请输入你的密码" autocomplete="off" prefix-icon="el-icon-view"></el-input>
+        </el-form-item>
+      <el-form-item style="width:100%; height: auto;">
+        <div class="btn">
+          <el-button  type="primary" @click.native.prevent="submitForm('loginForm')">立即登录</el-button>
+          <!-- <el-button  @click.native.prevent="resetForm('loginForm')">Reset</el-button> -->
+          <el-button class="register" @click.native.prevent="handleCommand()" style="text-decoration:underline; margin-top:8px;">不是用户？点击注册</el-button>
+        </div> 
       </el-form-item>
     </el-form>
   </div>
-
 </template>
 
 <script>
 export default {
   data() {
+    let validateEmail = (rule, value, callback) => {
+      if(value == ''){
+        callback(new Error('请输入邮箱~'));
+        return;
+      }
+      let emailRegex = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      if (!emailRegex.test(value)) {
+        callback(new Error('邮箱格式不正确！'))
+      } else {
+        callback();
+      }
+    };
     return {
       //登录表单数据
       loginForm: {
         username: "",
-        password: ""
+        password: "",
+        email:"",
+        telphone:""
       },
       //验证规则
       rules: {
@@ -40,6 +52,9 @@ export default {
         password: [
           { required: true, message: "Please enter password", trigger: "blur" }, //输入非空
           { mmin: 6, max: 16, message: "Length between 6 - 16 character", trigger: "blur" } //密码输入长度
+        ],
+        email: [
+          {required: true, validator: validateEmail, trigger: 'blur'}
         ]
       }
     };
@@ -59,6 +74,7 @@ export default {
           this.axios
             .post("/api/checklogin", {
               username: _this.loginForm.username,
+              email: _this.loginForm.email,
               password: _this.loginForm.password
             })
             .then(response => {
@@ -73,8 +89,8 @@ export default {
                   type:'success'
                 });
 
-                // 登录到后台界面
-                _this.$router.push('/main')
+                // 登录跳转到后台界面
+                _this.$router.push('/index')
 
               } else {
                 _this.$message.error('please check your username or password!');
@@ -88,62 +104,72 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    handleCommand() {
+      this.$router.push('/register');
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 html,body {
   margin: 0;
   padding: 0;
 }
-html, body, #app, .login {
+html, body, #app, .login{
   height: 100%;
+  width: 100%;
 }
 body{
-  background:#324057;
+  /* background-color:#4477D3; */
+  background-color: white;
 }
-.login {
+.login-container {
+  /* box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02); */
+  -webkit-border-radius: 5px;
+  border-radius: 10px;
+  -moz-border-radius: 5px;
+  background-cwlip: padding-box;
+  margin: 180px auto;
+  width: 400px;
+  height: 330px;
+  padding: 35px 35px 15px 35px;
+  background: white;
+  border: 1px solid #eaeaea;
+  /* box-shadow: 0 0 25px #cac6c6; */
+  /* box-shadow: 0px 1px 4px rgba(0,0,0,0.3),0px 0px 20px rgba(0,0,0,0.1) inset; */
+  box-shadow:15px 0 15px -15px #000, -15px 0 15px -15px #000;
+}
+.login-container .title {
+  margin: 0px auto 40px auto;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  font-family: 微软雅黑;
+  color: #505458;
+  border-bottom: 2px solid gray;
+  /* border-bottom-width:5px; */
+  border-bottom-style:ridge;
+}
+.btn{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.el-form {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  width: 400px;
-  border: 1px solid rgb(180, 180, 180,.2);
-  border-radius: 30px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  padding: 0 45px 10px 10px;
-  /* background-color: rgba(104, 103, 103, 0.1);
-
-  width: 400px;
-  padding: 0 45px 10px 10px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -200px;
-  margin-top: -200px;
-  background-color: rgba(137, 139, 139, 0.1);
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 10px 20px 0 20px;
-  text-align: left; */
+.el-button--primary{
+  width: 35%;
+  color: white;
+  font-size: 18px;
+  border-radius: 4px;
+  background-color: #545c64;
+  border-color: #545c64;
 }
-
-.el-form .title {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 30px;
-  color: #fff;
-  font-weight: bold;
-  margin: 20px 60px 20px 60px;
+.register{
+  border:none;
 }
-
-
 </style>
 
 

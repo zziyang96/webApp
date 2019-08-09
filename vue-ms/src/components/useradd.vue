@@ -7,44 +7,47 @@
           <!-- 左边栏 --> 
           <!-- <el-col :span="12"> -->
             <div class="area">
-              <p class="title" style="color:#4093ff;"><i class="fa fa-edit"></i><i class="el-icon-edit-outline"></i>添加账户</p>
+              <p class="title" style="color:#4093ff; width:650px;margin-top:-30px;"><i class="fa fa-edit"></i><i class="el-icon-edit-outline"></i>添加账户</p>
               <div class="content">
                 <el-form class="form"  :model="infoForm" :rules="infoRules" ref="infoForm" label-width="80px">
-                  <el-form-item label="用户名" prop="username" >
+                  <el-form-item label="用户名" prop="username" style="width:500px;">
                     <el-input v-model="infoForm.username"  size="small"  placeholder="请输入用户名"></el-input>
                   </el-form-item>
-                  <el-form-item label="个人姓名" prop="realname">
+                  <el-form-item prop="password" label="密码" style="width:500px;">
+                <el-input v-model="infoForm.password" type="password" placeholder="请输入密码"></el-input>
+            </el-form-item>
+                  <el-form-item label="姓名" prop="realname" style="width:500px;">
                     <el-input v-model="infoForm.realname" size="small" placeholder="请输入真实姓名"></el-input>
                   </el-form-item>
                   <el-form-item label="性别" prop="sex">
                     <el-radio v-model="infoForm.sex" label="1">男</el-radio>
                     <el-radio v-model="infoForm.sex" label="2">女</el-radio>                  
                   </el-form-item>
-                  <el-form-item label="证件号" prop="idType">
+                  <el-form-item label="证件号" prop="idType" style="width:500px;">
                     <el-input v-model="infoForm.idType" size="small" placeholder="请输入证件号"></el-input>
                   </el-form-item>
-                  <el-form-item label="邮箱" prop="email">
+                  <el-form-item label="邮箱" prop="email" style="width:500px;">
                     <el-input v-model="infoForm.email" size="small" placeholder="请输入邮箱"></el-input>
                   </el-form-item>
-                  <el-form-item label="手机" prop="telphone">
+                  <el-form-item label="手机" prop="telphone" style="width:500px;">
                     <el-input v-model="infoForm.telphone" size="small" placeholder="请输入手机"></el-input>
                   </el-form-item>
-                  <el-form-item label="部门" prop="department">
+                  <el-form-item label="部门" prop="department" style="width:400px;">
                     <el-select v-model="infoForm.department" size="small" placeholder="请选择所属部门" >
-                      <el-option label="研发开发" value="1"></el-option>
-                      <el-option label="技术支持" value="2"></el-option>
-                      <el-option label="商务" value="3"></el-option>
-                      <el-option label="人力资源" value="4"></el-option>
-                      <el-option label="测试" value="5"></el-option>
-                      <el-option label="管理" value="6"></el-option>
+                      <el-option label="研发开发" value="研发开发"></el-option>
+                      <el-option label="技术支持" value="技术支持"></el-option>
+                      <el-option label="商务" value="商务"></el-option>
+                      <el-option label="人力资源" value="人力资源"></el-option>
+                      <el-option label="测试" value="测试"></el-option>
+                      <el-option label="管理" value="管理"></el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="分支" prop="branch">
+                  <el-form-item label="分支" prop="branch" style="width:400px;">
                     <el-select v-model="infoForm.branch" size="small" placeholder="请选择所属分支" >
-                      <el-option label="深圳" value="1"></el-option>
-                      <el-option label="杭州" value="2"></el-option>
-                      <el-option label="广州" value="3"></el-option>
-                      <el-option label="顺德" value="4"></el-option>
+                      <el-option label="深圳" value="深圳"></el-option>
+                      <el-option label="杭州" value="杭州"></el-option>
+                      <el-option label="广州" value="广州"></el-option>
+                      <el-option label="顺德" value="顺德"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="个人图片(optional)" prop="userimage">
@@ -102,6 +105,7 @@ export default {
     return{
       infoForm:{
         username:'',
+        password:'',
         realname:'',
         email:'',
         telphone:'',
@@ -116,6 +120,10 @@ export default {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入用户密码', trigger: 'blur' },
+          { min: 6, max: 32, message: '长度在 6 到 32 个字符', trigger: 'blur' }
         ],
         realname: [
           { required: true, message: '请输入真实姓名', trigger: 'blur' },
@@ -168,51 +176,22 @@ export default {
       return isJEPG && isPNG && isJPG && isLt3M;
     },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          if(formName == 'infoForm'){ // 判断手机服务是否为空
-            this.infoForm.phone = this.infoForm.telphone;
-            for(let key in this.infoForm){
-              if(this.infoForm[key] == ''){
-                this.showMessage('warning','请您选择手机服务~');
-                return;
-              }
-            }
-          }else if(formName == 'infoForm'){// 判断修改信息是否为空
-            this.infoForm.telphone = this.infoForm.phone;
-            for(let key in this.infoForm){
-                if(this.infoForm[key] == ''){
-                    this.showMessage('warning','请您修改相关信息~');
-                    return;
-                }
-            }
+      const self = this;
+      self.$refs[formName].validate((valid) => {
+          if (valid) {
+              this.axios
+              .post('/api/addUser', self.infoForm).then(function (response) {
+                  console.log(response);
+                  self.$router.push('/userlist');
+              }).then (function (error) {
+                  console.log(error);
+              })
+          }else {
+              console.log('error submit!!');
+              return false
           }
-          //保存修改的相关信息
-          let userinfo = this.infoForm;
-          let userData = Object.assign(userinfo);
-          console.log(userData);
-          // axios({
-          //     type:'get',
-          //     path:'/src/components/useredit',
-          //     data:userData,
-          //     fn:data=>{
-          // 		console.log(data);
-          // 		if(data.status == 1){
-          // 			this.showMessage('success','修改密码成功~');
-          //             this.$router.push('/userlist');
-          // 		}else{
-          // 			 this.$message.error('修改失败请重试')
-          // 		}
-          // 	},
-          // 	errFn:(res)=>{
-          //         this.showMessage('error',res.message);
-          //     }
-          // })
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
       });
+
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -225,7 +204,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .el-header {
   background-color: #b3c0d1;
   color: #333;
@@ -236,9 +215,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-.hello{
-  font-size: 16px;
-}
+
 .username{
   font-size: 16px;
   color: #4093ff;
@@ -267,15 +244,20 @@ export default {
 /* .el-row{
   margin-top: -10px;
 } */
-.info_row .area{
-  border:1px solid #dfdfdf;
+.info_container .area{
+  /* border:1px solid #dfdfdf; */
   height:100%;
   font-size:14px;
   padding:10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.info_row .area .form{
-  width:90%;
-  margin-top:20px;
+.info_container .area .form{
+  width:100%;
+  height: 100%;
+  /* margin-top:20px; */
 }
 .el-form .el-form-item .el-button--primary{
   background-color:#545c64;

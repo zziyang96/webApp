@@ -14,22 +14,36 @@
             <el-table-column prop="username" label="账号" width="100"></el-table-column>
             <el-table-column prop="realname" label="姓名" width="100"></el-table-column>
             <el-table-column prop="sex" label="性别" width="100"></el-table-column>
-            <el-table-column prop="idType" label="证件号" width="100"></el-table-column>
-            <el-table-column prop="telphone" label="电话" width="110"></el-table-column>
-            <el-table-column prop="email" label="邮箱" width="200"></el-table-column>
-            <el-table-column prop="department" label="部门" width="110"></el-table-column>
-            <el-table-column prop="branch" label="分支" width="70"></el-table-column>
+            <el-table-column prop="idType" label="证件号" width="140"></el-table-column>
+            <el-table-column prop="telphone" label="电话" ></el-table-column>
+            <el-table-column prop="email" label="邮箱" ></el-table-column>
+            <el-table-column prop="department" label="部门" ></el-table-column>
+            <el-table-column prop="branch" label="分支" ></el-table-column>
 
-            <el-table-column fixed="right" label="操作" width="150">
+            <el-table-column fixed="right" label="操作" >
               <template slot-scope="scope">
                 <el-button class="el-icon-edit" @click="handleEdit" type="text" size="small">编辑</el-button>
-                <el-button class="el-icon-delete" @click="handleDel(scope.row.id)" type="text" size="small">删除</el-button>
+                <el-button class="el-icon-delete" @click="handleDelete(scope.row.id)" type="text" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
-        </div>
-        <div class="block">
-          <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
+
+          <el-row>
+          <el-col :span="24">
+            <div class="pagination">
+              <el-pagination
+                background
+                :page-sizes="paginations.pageSizes"
+                :layout="paginations.layout"
+                :total="pageTotal"
+                :current-page='paginations.pageIndex'
+                @current-change='handleCurrentChange'
+                @size-change='handleSizeChange'>
+              </el-pagination>
+            </div>
+          </el-col>
+        </el-row>
+        
         </div>
       </el-card>
     </el-main>
@@ -44,11 +58,20 @@ export default {
   data() {
     return {
       tableData: [],
-      pagesize:9,
-      currentPage:1
+      paginations: {
+        total:0,
+        pageIndex: 1,  // 当前位于哪页
+        pageSize: 6,   // 1页显示多少条
+        pageSizes: [5, 10, 15, 20],  //每页显示多少条
+        layout: "total, sizes, prev, pager, next, jumper"   // 翻页属性
+      },
     };
   },
   
+  props:{
+    pageTotal:Number
+  },
+
   created() {
     this.$store.dispatch('GET_USERLIST').then(() => {
       // console.log(this.$store.state.userList)
@@ -73,41 +96,65 @@ export default {
       this.$router.push({path: '/useredit'})
         console.log('编辑' + id )
     },
-    handleDel (id) {
-        console.log('删除' + id )
+    handleDelete (formName) {
+      console.log(id)
+      const self = this;
+      const userInfo = JSON.parse(localStorage.getItem('userinfo'));
+      let formData = {
+        id: userInfo["id"],
+        username: self.infoForm.username,
+        realname: self.infoForm.realname,
+        email: self.infoForm.email,
+        telphone: self.infoForm.telphone,
+        department: self.infoForm.department,
+        idType: self.infoForm.idType,
+        branch: self.infoForm.branch,
+        sex: self.infoForm.sex
+      };
+        self.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.axios
+            .post('/api/deleteUser', formData).then(function (response) {
+              console.log(response);
+            }).then (function (error) {
+              console.log(error);
+            })
+          }else {
+            console.log('error !!');
+            return false
+          }
+        });
+      },
+
+     // 每页多少条切换
+    handleSizeChange(pageSize) {
+        this.paginations.pageSize = pageSize;
+        this.getUserList();
     },
+    // 上下分页
+    handleCurrentChange(page) {
+        this.paginations.pageIndex = page;
+        this.getUserList({page, pageSize});
+    }
   },
   computed: {
-      ...mapState({
-          userList: state => state.userList,
-      })
+    ...mapState({
+      userList: state => state.userList,
+    })
   }
 };
 </script>
 
 
-<style>
-.el-header {
-  background-color: #b3c0d1;
-  color: #333;
-  line-height: 60px;
-  width: 100%;
-}
-/* .userlist {
+<style scoped>
+
+.userlist {
   width: 100%;
   height: 100%;
-} */
-.username{
-  font-size: 16px;
-  color: #4093ff;
-}
-.hello{
-  font-size: 16px;
 }
 .text {
   font-size: 14px;
 }
-
 .item {
   margin-bottom: 18px;
 }
@@ -123,9 +170,6 @@ export default {
 .clearfix:after {
   clear: both;
 }
-/* .clearfix{
-  background-color: 
-} */
 .el-card__header{
   background-color:#545c64;
 }
@@ -140,7 +184,8 @@ export default {
   border-radius: 4px;
   height: 100%;
 }
- .el-pagination{
-  float: right;
+.pagination{
+  text-align: right;
+  padding: 20px 18px;
 }
 </style>

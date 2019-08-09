@@ -1,5 +1,5 @@
 <template>
-  <div class="materials">
+  <div id="materials">
     <el-container>
       <el-main>
         <!-- <el-row :gutter="20">
@@ -60,12 +60,16 @@
             </el-col>
         </el-row> -->
         
-        <el-carousel :interval="4000" type="card" height="300px" style="margin-bottom:-25px;">
+        <el-carousel :interval="4000" type="card" height="350px" style="margin-bottom:-25px;">
           <el-carousel-item v-for="item in 6" :key="item">
-            <!-- <h3 class="medium">{{ category }}</h3>
-            <h3 class="medium">{{ description }}</h3> -->
+            <!-- 一下显示物料种类名字，种类包含的产品，数量，介绍 -->
+            <h3 class="medium">{{ category }}</h3>
+            <h3 class="medium">{{ productname }}</h3>
+            <h3 class="medium">{{ quantity }}</h3>
+            <h3 class="medium">{{ description }}</h3>
           </el-carousel-item>
         </el-carousel>
+        
       </el-main>  
 
       <el-divider content-position="center"> 添加物资种类</el-divider>
@@ -78,14 +82,9 @@
               <el-form-item label="物资种类名称" prop="category" style="width:600px">
                   <el-input v-model="ruleForm.category" placeholder="请输入需添加的物料种类名称"></el-input>
               </el-form-item>
-              <el-form-item label="物资种类图片" prop="categoryimage">
-                <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="uploadImg" :before-upload="beforeImgUpload">
-                  <img v-if="imageUrl" :src="imageUrl" class="avatar" v-model="ruleForm.categoryimage" />
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
-              </el-form-item>
+              
               <el-form-item>
-                  <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+                  <el-button type="primary" @click="submitForm('ruleForm')" style="background-color:#545c64; border:#545c64;">立即创建</el-button>
                   <el-button @click="resetForm('ruleForm')">重置</el-button>
               </el-form-item>
               </el-form>
@@ -104,8 +103,6 @@ export default {
     return {
         ruleForm: {
           category: '',
-          imageUrl: '',
-          categoryimage:'',
         },
         rules: {
           category: [
@@ -116,41 +113,8 @@ export default {
       };
     },
     methods: {
-      //照片上传
-      uploadImg(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeImgUpload(file) {
-        const isJPG = file.type === "image/jpeg";
-        const isJPEG = file.type === 'image/jpeg';
-        const isPNG = file.type === 'image/jpeg';
-        const isLt3M = file.size / 1024 / 1024 < 3;
-
-        if (!isJPG) {
-          this.$message.error("上传头像图片只能是 JPG 格式!");
-        }
-        if (!isPNG) {
-          this.$message.error("上传头像图片只能是 PNG 格式!");
-        }
-        if (!isJEPG) {
-          this.$message.error("上传头像图片只能是 JEPG 格式!");
-        }
-        if (!isLt3M) {
-          this.$message.error("上传头像图片大小不能超过 3MB!");
-        }
-        return isJEPG && isPNG && isJPG && isLt3M;
-      },
       //表单提交
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
+      submitForm(formName) {},
       //表单重置
       resetForm(formName) {
         this.$refs[formName].resetFields();
@@ -163,13 +127,11 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 
 .materials{
   width: 100%;
-}
-.hello{
-  font-size: 16px;
+  height: 100%;
 }
 .el-row {
   display: flex;
@@ -177,14 +139,7 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
 }  
-/*
-.el-col {
-    border-radius: 4px;
-}
-.form_header{
-    text-align: center;
-    margin-bottom: 10px;
-} */
+
 .el-container{
   height: 100%;
 }
@@ -193,7 +148,6 @@ export default {
 }
 .el-row :last-child{
   margin-bottom: 3px;
-
 }
 .el-col {
   border-radius: 4px;
@@ -228,8 +182,6 @@ export default {
 .bottom, .clearfix{
   float: right;
 }
-
-
 .el-carousel__item h3 {
   color: whitesmoke;
   font-size: 14px;
@@ -238,11 +190,9 @@ export default {
   margin: 0;
   
 }
-
 .el-carousel__item:nth-child(2n) {
   background-color: whitesmoke;
 }
-
 .el-carousel__item:nth-child(2n+1) {
   background-color: whitesmoke;
 }

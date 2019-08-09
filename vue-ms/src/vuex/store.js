@@ -24,9 +24,7 @@ const mutations = {
 
         //update data
         state.userinfo = userinfo
-
-        //console.log('函数触发')
-        //console.log('触发后获得的用户数据：',state.userinfo)
+        //console.log('函数触发后获得的用户数据：',state.userinfo)
     },
     //获取全局用户数据
     GET_USERLIST(state, userlist){
@@ -36,7 +34,7 @@ const mutations = {
 
 //define vuex-action, commit mutation and change state by mutation
 const actions = {
-    GET_USERLIST ({ commit }) {
+    GET_USERLIST ({ commit }, pageObject) {
         return new Promise((resolve, reject) => {
             axios.get('/api/getuserlist').then(response => {
                 commit('GET_USERLIST', response.data);
@@ -53,9 +51,10 @@ const getters = {
 
 
 
+
+
+
 console.log()
-
-
 //create storage and explose data
 export default new Vuex.Store({
     state,

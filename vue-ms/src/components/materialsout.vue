@@ -1,10 +1,10 @@
 <template>
-  <div class="materialsadd">
+  <div class="materialsout">
     <el-container>
     <el-main>
-      <el-row :gutter="32">
-        <el-col :span="12">
-          <p class="title"> 物资录入登记</p>
+      <!-- <el-row :gutter="">
+        <el-col :span="12"> -->
+          <p class="title"> 物资提出登记</p>
           <el-form :model="materialForm" :rules="rules" ref="materialForm" label-width="120px" class="demo-materialForm" >
             <el-form-item label="物资名称" prop="productname" style="width:400px;margin-top:-5px;margin-bottom:15px;">
               <el-input v-model="materialForm.productname" size="mini" placeholder="请输入物资名称"></el-input>
@@ -26,14 +26,15 @@
             <el-form-item label="厂商/供应商" prop="manufacturer" style="width:400px;margin-top:-5px;margin-bottom:15px;">
               <el-input v-model="materialForm.manufacturer" size="mini" placeholder="请输入厂商/供应商名称"></el-input>
             </el-form-item>
-            <el-form-item label="物资录入数量" required prop="quantity" style="margin-top:5px;margin-bottom:15px;">
+            
+            <el-form-item label="物资提出数量" required prop="quantity" style="margin-top:5px;margin-bottom:15px;">
                 <el-input-number v-model="materialForm.quantity" @change="handleChange" :min="1" :max="1" size="small" label="描述文字"></el-input-number>
             </el-form-item>
-            <el-form-item label="录入人姓名" prop="recorder" style="width:300px;margin-top:-5px;margin-bottom:15px;">
-              <el-input v-model="materialForm.recorder" size="mini" placeholder="请输入录入人姓名"></el-input>
+            <el-form-item label="提出人姓名" prop="recorder" style="width:300px;margin-top:-5px;margin-bottom:15px;">
+              <el-input v-model="materialForm.recorder" size="mini" placeholder="请输入提出人姓名"></el-input>
             </el-form-item>
-            <el-form-item label="物资录入时间" required clearable prop="time_in" style="width:300px;margin-top:-5px;margin-bottom:15px;">
-              <el-date-picker v-model="materialForm.time_in" type="datetime" placeholder="选择录入日期时间" size="mini" align="right" :picker-options="pickerOptions"
+            <el-form-item label="物资提出时间" required clearable prop="time_out" style="width:300px;margin-top:-5px;margin-bottom:15px;">
+              <el-date-picker v-model="materialForm.time_out" type="datetime" placeholder="选择提出日期时间" size="mini" align="right" :picker-options="pickerOptions"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="物资状态" prop="staus" style="width:300px;margin-top:-5px;margin-bottom:15px;">
@@ -45,11 +46,12 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('materialForm')" style="background-color:#545c64; border:#545c64;">立即提交</el-button>
-              <el-button @click="resetForm1('materialForm')">重置</el-button>
+              <el-button @click="resetForm('materialForm')">重置</el-button>
             </el-form-item>
           </el-form>
-        </el-col>
-      </el-row>
+        <!-- </el-col>
+
+      </el-row> -->
     </el-main>
     </el-container>
   </div>
@@ -154,7 +156,7 @@ export default {
 
 
 <style scoped>
-.materialsadd {
+.materialsout {
   width: 100%;
   height: 100%;
 }

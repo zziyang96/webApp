@@ -34,33 +34,58 @@
   
   create table categories(
     id int primary key auto_increment,
-    category varchar(50) ,
-    description varchar(255),
-    categoryimg mediumblob
+    category varchar(50),
+    description varchar(255)
   );
   
   create table manufacturers(
     id int primary key auto_increment,
     manufacturer varchar(50),
     productname varchar(50),
-    productmodel varchar(50)
+    productmodel varchar(50),
+    productprice int
   );
 
   create table materials(
     id int primary key auto_increment,
-    manufacturerId int foreign key references manufacturers(id)
     description varchar(255),
-    categoryId int foreign key references categories (id),
-    productimg mediumblob,
+    manufacturerId int, 
+    categoryId int,
+    recorderId int,
     quantity int default 1,
-    status enum,
-    recorderId varchar(50) foreign key references users (id),
-    timerecord datatime
+    create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    status enum ('已录入','已借出','采购中'),
+    foreign key (manufacturerId) references manufacturers(id),
+    foreign key (categoryId) references categories(id),
+    foreign key (recorderId) references users(id)
   );
 
-  create table record(
-    
-  )
+  create table materialadd_user(
+    id int primary key auto_increment,
+    recorderId int,
+    materialId int,
+    categoryId int,
+    manufacturerId int,
+    time_in datetime,
+    foreign key (manufacturerId) references manufacturers(id),
+    foreign key (categoryId) references categories(id),
+    foreign key (materialId) references materials(id),
+    foreign key (recorderId) references users(id)
+  );
+
+  create table materialout_user(
+    id int primary key auto_increment,
+    recorderId int,
+    materialId int,
+    categoryId int,
+    manufacturerId int,
+    time_out datetime,
+    foreign key (manufacturerId) references manufacturers(id),
+    foreign key (categoryId) references categories(id),
+    foreign key (materialId) references materials(id),
+    foreign key (recorderId) references users(id)
+  );
 
 
   insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('admin','123456','超级管理员','男', '13888888881','qz_admin@gmail.com','111','研发','深圳');
@@ -71,6 +96,8 @@
   insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('alice09','123456','爱丽丝','女','13346765443','qz_alice@gmail.com','55219','人资','顺德');
   insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('victor','123456','维克多','男','13377777777','qz_victor@gmail.com','55888','研发','深圳');
   insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('victoria','123456','维多利亚','女','13364555443','qz_victoria09@gmail.com','55432','人资','杭州');
-  
+
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('hala','123456','哈拉','男','13375472767','qz_hala02@gmail.com','440681198223110921','研发','深圳');
+  insert into users(username, password, realname, sex, telphone, email, idType, department, branch) values ('june','123456','均撒','女','13364578843','qz_junee9@gmail.com','440681199809921233','人技术资','杭州');
 
  -->
