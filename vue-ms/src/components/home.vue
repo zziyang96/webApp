@@ -5,7 +5,7 @@
       <el-card class="box-card1">
         <div slot="header" class="clearfix">
           <span style="color:#4093ff;"><i class="el-icon-user-solid"></i>用户信息卡</span>
-          <el-button style="float: right; padding: 3px 0" type="text">查看</el-button>
+          <el-button @click="handleEdit" style="float: right; padding: 3px 0" type="text">编辑</el-button>
         </div>
 
 
@@ -72,6 +72,10 @@ export default {
     };
   },
    methods: {
+      handleEdit (id) {
+      this.$router.push({path: '/useredit'})
+        console.log('编辑' + id )
+      },
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
       },

@@ -135,6 +135,37 @@ router.post('/changePassword', (req,res) => {
 });
 
 
+//get category request
+router.get('/getcategorylist',(req,res) => {
+  const sqlStr = "select * from categories";
+  connection.query(sqlStr, (err, result) =>{
+    if(err){
+      throw err;
+    }else {
+      res.send(result);
+    }
+    // connection.release();
+  })
+});
+
+
+//get materialslist request
+router.get('/getmateiralslist',(req,res) => {
+  const sqlStr = "select * from materials";
+  connection.query(sqlStr, (err, result) =>{
+    if(err){
+      throw err;
+    }else {
+      res.send(result);
+    }
+    // connection.release();
+  })
+});
+
+
+
+
+
 
 module.exports = router;
 

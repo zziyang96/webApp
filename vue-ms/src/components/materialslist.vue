@@ -6,6 +6,17 @@
         <div slot="header" class="clearfix">
           <span style="color:#4093ff;float: left;padding:10px 1px;"><i class="el-icon-menu"></i>物料列表</span>
           <el-button style="float: right;" type="text" @click="handleAdd">添加</el-button>
+          
+        </div>
+        <div style="margin-top: 15px;">
+          <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
+            <el-select v-model="select" slot="prepend" placeholder="请选择">
+              <el-option label="型号" value="型号"></el-option>
+              <el-option label="生厂商" value="生厂商"></el-option>
+              <el-option label="物料名称" value="物料名称"></el-option>
+            </el-select>
+            <el-button slot="append" icon="el-icon-search"></el-button>
+          </el-input>
         </div>
         <div class="text item">
           <!-- 表格 -->
@@ -37,15 +48,27 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   data() {
     return {
       pagesize:9,
       currentPage:1,
+      select: '',
       tableData: [{}]
     }
+  },
+  created() {
+    this.$store.dispatch('GET_PRODUCTLIST').then(() => {
+      // console.log(this.$store.state.productList)
+      // 把全局的 productList 赋值给 table
+      this.tableData = this.productList;
+
+    })
+    // this.GET_PRODUCTLIST().then (() => {
+    //     this.tableData = this.productList;
+    // });
   },
   methods:{
     handleAdd (id) {
@@ -54,7 +77,9 @@ export default {
     }
   },
   computed:{
-    ...mapState({ })
+    ...mapState({ 
+      productList: state => state.productList,
+    })
   }
 };
 </script>

@@ -216,6 +216,7 @@ export default {
       .get('/api/getuserlist', {username:username}).then(function(response) {
         console.log(response);
         let result = response.data[0];
+        // let result = new result([response.data]);
         self.infoForm.id = result.id;
         self.infoForm.username = result.username;
         self.infoForm.realname = result.realname;
